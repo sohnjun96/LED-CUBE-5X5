@@ -1,4 +1,5 @@
 #define TIME 133
+#define SECOND 1000000
 int dec05_s03 = 0;
 int dec05_s02 = 1;
 int dec01_s03 = 2;
@@ -14,6 +15,8 @@ int dec04_s03 = 11;
 int dec04_s02 = 12;
 int dec04_s01 = 13;
 int MAT[125]= {0,};
+int frame = 0;
+
 
 void setup() 	//Setting Pinmodes
 {
@@ -242,58 +245,90 @@ void COL_20()
   digitalWrite(dec04_s03,HIGH);
 }
 
-void TurnLED(int*arr);
-void ONLED(int*arr);
+void TurnLED(int*arr,int time);
+int ONLED(int*arr);
 void loop()
 {
-  digitalWrite(dec05_s02, HIGH);
-  digitalWrite(dec05_s03, HIGH);
-
-
+  TurnLED(MAT,ONLED(MAT));
+  frame++;
 }
 
-void TurnLED(int*arr)		//Layer by Layer and LED by LED 133us per each LED.
+void TurnLED(int*arr,int time)		//Turn LEDs ON where arr[i] = 1 for time period 
 {
-	int i,j;
-	for(i=0;i<5;i++)
+	int i,t;
+	t=0;
+	while(t<time)			//
 	{
-		switch(i){
-		case 0:LAYER01(); break;
-		case 1:LAYER02(); break;
-		case 2:LAYER03(); break;
-		case 3:LAYER04(); break;
-		case 4:LAYER05(); break;
+		for(i=0;i<5;i++)
+		{
+			switch(i){
+			case 0:LAYER01(); break;
+			case 1:LAYER02(); break;
+			case 2:LAYER03(); break;
+			case 3:LAYER04(); break;
+			case 4:LAYER05(); break;
+			}
+			if(*arr++)COL_01();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_02();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_03();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_04();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_05();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_06();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_07();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_08();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_09();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_10();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_11();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_12();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_13();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_14();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_15();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_16();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_17();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_18();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_19();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_20();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_21();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_22();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_23();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_24();delayMicroseconds(TIME);t+=TIME;
+			if(*arr++)COL_25();delayMicroseconds(TIME);t+=TIME;
 		}
-		if(*arr++)COL_01();delayMicroseconds(TIME);
-		if(*arr++)COL_02();delayMicroseconds(TIME);
-		if(*arr++)COL_03();delayMicroseconds(TIME);
-		if(*arr++)COL_04();delayMicroseconds(TIME);
-		if(*arr++)COL_05();delayMicroseconds(TIME);
-		if(*arr++)COL_06();delayMicroseconds(TIME);
-		if(*arr++)COL_07();delayMicroseconds(TIME);
-		if(*arr++)COL_08();delayMicroseconds(TIME);
-		if(*arr++)COL_09();delayMicroseconds(TIME);
-		if(*arr++)COL_10();delayMicroseconds(TIME);
-		if(*arr++)COL_11();delayMicroseconds(TIME);
-		if(*arr++)COL_12();delayMicroseconds(TIME);
-		if(*arr++)COL_13();delayMicroseconds(TIME);
-		if(*arr++)COL_14();delayMicroseconds(TIME);
-		if(*arr++)COL_15();delayMicroseconds(TIME);
-		if(*arr++)COL_16();delayMicroseconds(TIME);
-		if(*arr++)COL_17();delayMicroseconds(TIME);
-		if(*arr++)COL_18();delayMicroseconds(TIME);
-		if(*arr++)COL_19();delayMicroseconds(TIME);
-		if(*arr++)COL_20();delayMicroseconds(TIME);
-		if(*arr++)COL_21();delayMicroseconds(TIME);
-		if(*arr++)COL_22();delayMicroseconds(TIME);
-		if(*arr++)COL_23();delayMicroseconds(TIME);
-		if(*arr++)COL_24();delayMicroseconds(TIME);
-		if(*arr++)COL_25();delayMicroseconds(TIME);
 	}
 }
-void ONLED(int *arr)
+int ONLED(int *arr)
 {
-  
-
-
+	int time;
+  switch(frame){
+  case 0: int mat[125] = {0,}; arr = mat; break; 
+  case 1: int mat[125] = {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1}; arr = mat; break; 
+  case 2: int mat[125] = {0,}; arr = mat; break;
+  case 3: int mat[125] = {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1}; arr = mat; break; 
+  //모서리
+  case 4: int mat[125] = {1,1,1,1,1,1,0,0,0,1,1,0,0,0,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,1,1,0,0,0,1,1,1,1,1,1};arr = mat; break;
+  //대각선 회전
+  case 5: int mat[125] = {1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0};arr = mat; break;
+  case 6: int mat[125] = {0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0};arr = mat; break;
+  case 7: int mat[125] = {0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0};arr = mat; break;
+  case 8: int mat[125] = {0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0};arr = mat; break;
+  case 9: int mat[125] = {0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1};arr = mat; break;
+  case 10: int mat[125] = {0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0};arr = mat; break;
+  case 11: int mat[125] = {0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0};arr = mat; break;
+  case 12: int mat[125] = {0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0};arr = mat; break;
+  //상승
+  case 13: int mat[125] = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};arr = mat; break;
+  case 14: int mat[125] = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};arr = mat; break;
+  case 15: int mat[125] = {};arr = mat; break;
+  case 16: int mat[125] = {};arr = mat; break;
+  case 17: int mat[125] = {};arr = mat; break;
+  case 18: int mat[125] = {};arr = mat; break;
+  case 19: int mat[125] = {};arr = mat; break;
+  case 20: int mat[125] = {};arr = mat; break;
+  case 21: int mat[125] = {};arr = mat; break;
+  case 22: int mat[125] = {};arr = mat; break;
+  case 23: int mat[125] = {};arr = mat; break;
+  case 24: int mat[125] = {};arr = mat; break;
+  case 25: int mat[125] = {};arr = mat; break;
+  }
+	return time;
 }
