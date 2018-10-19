@@ -1,5 +1,6 @@
 #define TIME 133
 #define SECOND 1000000
+int dec05_s01 = A0;
 int dec05_s02 = 0;
 int dec05_s03 = 1;
 int dec01_s01 = 2;
@@ -36,7 +37,7 @@ void setup() 	//Setting Pinmodes
   pinMode(dec04_s01, OUTPUT);
   pinMode(dec05_s03, OUTPUT);
   pinMode(dec05_s02, OUTPUT);
-  
+  pinMode(dec05_s01, OUTPUT);
 }
                                 //Decoder #1 LAYER Selection
 void LAYER01()
@@ -69,24 +70,32 @@ void LAYER05()
   digitalWrite(dec01_s02,LOW);
   digitalWrite(dec01_s03,LOW);
 }
+void dec_OFF()
+{
+  digitalWrite(dec05_s01,HIGH);
+}
 //PORT 00,01 => 2X4 Decoder05
 void dec02_ON()
 {
+  digitalWrite(dec05_s01,LOW);
   digitalWrite(dec05_s02,LOW);
   digitalWrite(dec05_s03,LOW);
 }
 void dec03_ON()
 {
+  digitalWrite(dec05_s01,LOW);
   digitalWrite(dec05_s02,HIGH);
   digitalWrite(dec05_s03,LOW);
 }
 void dec04_ON()
 {
+  digitalWrite(dec05_s01,LOW);
   digitalWrite(dec05_s02,LOW);
   digitalWrite(dec05_s03,HIGH);
 }
 void COL_25()
 {
+  digitalWrite(dec05_s01,LOW);
   digitalWrite(dec05_s02,HIGH);
   digitalWrite(dec05_s03,HIGH);
 }
