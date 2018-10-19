@@ -1,6 +1,6 @@
 #define TIME 20
-#include <stdlib.h>
 #define SECOND 1000000
+int dec05 = A0;
 int dec05_s02 = 0;
 int dec05_s03 = 1;
 int dec01_s01 = 2;
@@ -19,8 +19,8 @@ int dec04_s03 = 13;
 
 void setup() 	//Setting Pinmodes
 {
-  int i;
   
+  pinMode(dec05, OUTPUT);
   pinMode(dec01_s03, OUTPUT);
   pinMode(dec01_s02, OUTPUT);
   pinMode(dec01_s01, OUTPUT);
@@ -69,23 +69,31 @@ void LAYER05()
   digitalWrite(dec01_s03,LOW);
 }
 //PORT 00,01 => 2X4 Decoder05
+void ALLOFF()
+{
+  digitalWrite(dec05,LOW);
+}
 void dec02_ON()
 {
+  digitalWrite(dec05,HIGH);
   digitalWrite(dec05_s02,LOW);
   digitalWrite(dec05_s03,LOW);
 }
 void dec03_ON()
 {
+  digitalWrite(dec05,HIGH);
   digitalWrite(dec05_s02,HIGH);
   digitalWrite(dec05_s03,LOW);
 }
 void dec04_ON()
 {
+  digitalWrite(dec05,HIGH);
   digitalWrite(dec05_s02,LOW);
   digitalWrite(dec05_s03,HIGH);
 }
 void COL_25()
 {
+  digitalWrite(dec05,HIGH);
   digitalWrite(dec05_s02,HIGH);
   digitalWrite(dec05_s03,HIGH);
 }
@@ -245,7 +253,7 @@ void COL_19()
   digitalWrite(dec04_s02,HIGH);
   digitalWrite(dec04_s03,HIGH);
 }
-
+void Debugging();
 void TurnLED(short *arr,long time);
 void MAT_ROTATION(int frame,long time);
 void MAT_DUCK(int frame, long time);
@@ -255,38 +263,11 @@ void MAT_YSE(int frame,long time);
 void MAT_HEARTSTAR(int frame,long time);
 void MAT_PLATE(int frame,long time);
 void MAT_GOINGUP(int frame, long time);
+void Program01();
 /////////////////////////////////////////////////////////
 void loop()
 {
-  int i=0;
-  
-  for(i=0;i<3;i++)
-  {
-    MAT_CUBE(i,SECOND/4);
-  }
-  for(i=1;i>=0;i--)
-  {
-    MAT_CUBE(i,SECOND/3);
-  }
-  for(i=0;i<30;i++)
-  {
-    MAT_SPARKLE(i%2,SECOND/10);
-  }
-  for(i=0;i<6;i++)
-  {
-   // MAT_DUCK(i%2,SECOND/10);
-  }
-  
-  for(i=0;i<5;i++)
-   MAT_PLATE(i,SECOND/10);
-  for(i=3;i>=0;i--)
-    MAT_PLATE(i,SECOND/10);
-  for(i=0;i<7;i++)
-    MAT_GOINGUP(i,SECOND/10);
-  for(i=6;i>=0;i--)
-    MAT_GOINGUP(i,SECOND/10);
-  for(i=0;i<32;i++)
-    MAT_ROTATION(i%8,SECOND/10);
+  Program01();
 }
 ////////////////////////////////////////////////////
 void TurnLED(short*arr,long time)		//Turn LEDs ON where arr[i] = 1 for time period 
@@ -306,31 +287,32 @@ void TurnLED(short*arr,long time)		//Turn LEDs ON where arr[i] = 1 for time peri
       LAYER04();
       else if(i==4)
       LAYER05();
-			if(*arr+i*25)COL_01();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+1+i*25))COL_02();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+2+i*25))COL_03();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+3+i*25))COL_04();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+4+i*25))COL_05();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+5+i*25))COL_06();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+6+i*25))COL_07();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+7+i*25))COL_08();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+8+i*25))COL_09();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+9+i*25))COL_10();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+10+i*25))COL_11();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+11+i*25))COL_12();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+12+i*25))COL_13();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+13+i*25))COL_14();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+14+i*25))COL_15();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+15+i*25))COL_16();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+16+i*25))COL_17();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+17+i*25))COL_18();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+18+i*25))COL_19();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+19+i*25))COL_20();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+20+i*25))COL_21();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+21+i*25))COL_22();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+22+i*25))COL_23();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+23+i*25))COL_24();delayMicroseconds(TIME);t+=TIME;
-			if(*(arr+24+i*25))COL_25();delayMicroseconds(TIME);t+=TIME;
+      ALLOFF();
+		  if(*(arr+i*25))COL_01();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+1+i*25))COL_02();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+2+i*25))COL_03();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+3+i*25))COL_04();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+4+i*25))COL_05();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+5+i*25))COL_06();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+6+i*25))COL_07();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+7+i*25))COL_08();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+8+i*25))COL_09();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+9+i*25))COL_10();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+10+i*25))COL_11();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+11+i*25))COL_12();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+12+i*25))COL_13();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+13+i*25))COL_14();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+14+i*25))COL_15();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+15+i*25))COL_16();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+16+i*25))COL_17();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+17+i*25))COL_18();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+18+i*25))COL_19();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+19+i*25))COL_20();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+20+i*25))COL_21();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+21+i*25))COL_22();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+22+i*25))COL_23();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+23+i*25))COL_24();delayMicroseconds(TIME);t+=TIME;ALLOFF();
+			if(*(arr+24+i*25))COL_25();delayMicroseconds(TIME);t+=TIME;ALLOFF();
 		}
   }
 }
@@ -451,4 +433,45 @@ void MAT_GOINGUP(int frame, long time)
     case 5:TurnLED(mat6,time);break;
     case 6:TurnLED(mat7,time);break;
   }
+}
+
+void Debugging()
+{
+  short mat[125] = {0,};
+  int i=0;
+  for(i=0;i<125;i++)
+  {
+    mat[i] = 1;
+    TurnLED(mat,SECOND/10);
+  }
+}
+
+void Program01()
+{
+  int i;
+  for(i=0;i<3;i++)
+  {
+    MAT_CUBE(i,SECOND/4);
+  }
+  ALLOFF();
+  delay(1000);
+  for(i=1;i>=0;i--)
+  {
+    MAT_CUBE(i,SECOND/3);
+  }
+  for(i=0;i<30;i++)
+  {
+    MAT_SPARKLE(i%2,SECOND/5);
+  }
+  for(i=0;i<6;i++)
+  {
+   // MAT_DUCK(i%2,SECOND/10);
+  }
+  
+  for(i=0;i<5;i++)
+   MAT_PLATE(i,SECOND/10);
+  for(i=3;i>=0;i--)
+    MAT_PLATE(i,SECOND/10);
+  for(i=0;i<32;i++)
+    MAT_ROTATION(i%8,SECOND/10);
 }
